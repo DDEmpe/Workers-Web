@@ -1,0 +1,22 @@
+.nav-item{
+    list-style: none;
+    margin: auto 1vh;
+}
+
+.cardjoblist{
+    border: 2px solid black;
+    overflow: auto;
+    flex-flow: wrap;
+    flex-direction: row;
+    padding: 2vw;
+    justify-content: center;
+}
+
+.cardjob{
+ margin: 1vw;
+}
+
+.footer{
+    list-style: none;
+    text-align: center;
+}
