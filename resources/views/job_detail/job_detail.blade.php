@@ -26,7 +26,7 @@
 
       <hr>
       <p style="margin : 0;">Bidang : {{ $job_vacancy -> department->departement_name  }}</p>
-      <p style="margin : 0;">Alamat : {{ $job_vacancy -> address }}</p>
+      <p style="margin : 0;">Alamat : {{ $job_vacancy -> location }}</p>
       <p style="margin : 0;">Jenis Kerja :  {{ $job_vacancy -> job_type }}</p>
       <p style="margin : 0;">Minimum Pendidikan : {{ $job_vacancy -> last_education }} </p>
       <p style="margin : 0;">Jurusan : {{ $job_vacancy -> study_major->study_name }} </p>

@@ -168,13 +168,31 @@ class RegisterController extends Controller
 
             $rulescompany = [
                 '`user_id`' => 'integer',
-                'facebook' => 'string',
-                'twitter' => 'string',
-                'website' => 'string',
-                'instagram' => 'string',
                 'company_category_id' =>  'integer',
-                'googlemaps' => 'string',
             ];
+            
+
+            $validateddata = $request->validate($rulescompany);
+            if($request->twitter!=null){
+                $validateddata['twitter'] = $request->twitter;
+            }
+            if($request->website!=null){
+                $validateddata['website'] = $request->website;
+
+            }           
+            if($request->facebook!=null){
+                $validateddata['facebook'] = $request->facebook;
+
+            }           
+            if($request->instagram!=null){
+                $validateddata['instagram'] = $request->instagram;
+
+            }
+            if($request->googlemaps!=null){
+                $validateddata['googlemaps'] = $request->googlemaps;
+
+            }
+
 
             $validateddata = $request->validate($rulescompany);
             $validateddata['user_id'] = $uid;

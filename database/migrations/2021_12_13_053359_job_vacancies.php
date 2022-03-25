@@ -17,7 +17,7 @@ class JobVacancies extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->string('branch');
-            $table->string('address');
+            $table->string('location');
             $table->string('uid_job_vacancy')->unique();
             $table->unsignedBigInteger('departement_id');
             $table->string('job_type');

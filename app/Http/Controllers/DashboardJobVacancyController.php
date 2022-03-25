@@ -47,17 +47,18 @@ class DashboardJobVacancyController extends Controller
      */
     public function store(Request $request,job_vacancy $job_vacancy)
     {
+        $today=date("Y-m-d", time());
         $rules = [
 
             'branch' =>  'required|string',
             'description' =>  'required|string',
             'job_type' =>  'required|string',
-            'address' =>   'required|string',
+            'location' =>   'required|string',
             'last_education' =>  'required|string',
             'study_major_id' => 'required|integer',
-            'min_wages' => 'required|integer',
-            'max_wages' => 'required|integer',
-            'deadline' =>  'required|date',
+            'min_wages' => 'required|numeric|lt:max_wages',
+            'max_wages' => 'required|numeric|gt:min_wages',
+            'deadline' =>  'required|date|after:'.$today.'',
             'departement_id' =>  'required|integer',
             'interview' =>  'required|boolean',
 
@@ -116,17 +117,18 @@ class DashboardJobVacancyController extends Controller
      */
     public function update(Request $request, job_vacancy $job_vacancy, $id)
     {
+        $today=date("Y-m-d", time());
         $rules = [
 
             'branch' =>  'required|string',
             'description' =>  'required|string',
             'job_type' =>  'required|string',
-            'address' =>   'required|string',
+            'location' =>   'required|string',
             'last_education' =>  'required|string',
             'study_major_id' => 'required|integer',
-            'min_wages' => 'required|integer',
-            'max_wages' => 'required|integer',
-            'deadline' =>  'required|date',
+            'min_wages' => 'required|numeric|lt:max_wages',
+            'max_wages' => 'required|numeric|gt:min_wages',
+            'deadline' =>  'required|date|after:'.$today.'',
             'departement_id' =>  'required|integer',
             'interview' =>  'required|boolean',
 
