@@ -13,7 +13,11 @@
   </ol>
 </nav>
   @foreach ($user as $usr)
+  @if ( $usr->profile_img == "")
+  <img src="/image/defaultcompany.png" class="rounded mx-auto d-block" style="background-color: white; border-color: lightblue; border-style: solid; border-width: 1px;" width="25%">
+  @else
   <img src={{ $usr->profile_img }} class="rounded mx-auto d-block" style="background-color: white; border-color: lightblue; border-style: solid; border-width: 1px;" width="25%">
+  @endif       
   @endforeach
       
       <div class="container-fluid p-3" style="background-color: white;">

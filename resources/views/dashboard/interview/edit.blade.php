@@ -13,15 +13,25 @@
         @endforeach
         <div class="mb-3">
             <label for="job_vacancy" class="form-label">Lowongan</label>
-            <select class="form-select" name="job_vacancy_id">
+            <select class="form-control  @error('job_vacancy_id') is-invalid @enderror" name="job_vacancy_id">
+                <option value="">Pilih Lowongan</option>
                 @foreach ($jobvacancies as $jobvacancy)
+                @if ($item->job_vacancy_id == $jobvacancy->id)
+                <option value="{{old('id',$jobvacancy->id)}}" selected>{{old('branch',$jobvacancy->branch)}} </option>
+                @else
                 <option value="{{old('id',$jobvacancy->id)}}">{{old('branch',$jobvacancy->branch)}} </option>
-                @endforeach
+                @endif
+            @endforeach
             </select>
+            @error('job_vacancy_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
         </div>
         <div class="mb-3">
             <label for="interview_date" class="form-label">Jadwal Interview</label>
-            <input type="date" class="form-control @error('interview_date') is-invalid @enderror" id="interview_date" name="interview_date" required
+            <input type="date" class="form-control @error('interview_date') is-invalid @enderror" id="interview_date" name="interview_date"
                 value="{{old('interview_date',$item->interview_date)}}">
             @error('interview_date')
                 <div class="invalid-feedback">
@@ -32,15 +42,21 @@
 
         <div class="mb-3">
             <label for="kategori" class="form-label">Tipe Interview</label>
-            <select class="form-select" name="kategori_id">
+            <select class="form-control @error('kategori_id') is-invalid @enderror" name="kategori_id">
+                <option value=""> Tipe Interview</option>
                 <option value="0" selected>Interview Langsung</option>
                 <option value="1" selected>Interview Online</option>
             </select>
+            @error('kategori_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
         </div>
 
         <div class="mb-3">
             <label for="address" class="form-label">Lokasi Wawancara</label>
-            <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" required
+            <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address"
                 placeholder="Masukkan lokasi Interview">{{old('address',$item->address)}}</textarea>
             @error('address')
                 <div class="invalid-feedback">

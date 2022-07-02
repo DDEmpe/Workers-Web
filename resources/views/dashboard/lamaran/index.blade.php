@@ -22,7 +22,7 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $lamaran -> branch }}</td>
-              <td>{{ $lamaran -> address }}</td>
+              <td>{{ $lamaran -> location }}</td>
               <td>{{ $lamaran -> job_type }}</td>
               @if($lamaran->accepted==true)
                 <td>Accepted</td>

@@ -36,7 +36,6 @@ class ProfileController extends Controller
                 'title' => 'Edit Profil User',
                 'professions' => profession::all(),
                 'study_majors' => study_major::all(),
-
             ]);
         } else {
             return view('profile_comp.editprofilecomp', [

@@ -19,8 +19,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <div class="rounded-circle" style="width: 15vw; height: 15vw; overflow: hidden;">
+                                <div class="rounded-circle" style="width: 15vw; height: 15vw; overflow: hidden;">  
+                                    @if ( $user->profile_img == "")
+                                    <img src="/image/defaultcompany.png" alt="Admin" style="width:100%; height:auto;">
+                                    @else
                                     <img src="{{ $user->profile_img }}" alt="Admin" style="width:100%; height:auto;">
+                                    @endif
                                 </div>
                                 <div class="mt-3">
                                     <h4>{{ $user->name }}</h4>

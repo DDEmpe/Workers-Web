@@ -20,14 +20,21 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <div class="rounded-circle" style="width: 15vw; height: 15vw; overflow: hidden;">
-                                    <img src="{{ $user->profile_img }}" alt="Admin" style="width:100%; height:auto">
-                                </div>
-
+                                    @if ( $user->profile_img == "")
+                                    <img src="/image/defaultcompany.png" alt="Admin" style="width:100%; height:auto;">
+                                    @else
+                                    <img src="{{ $user->profile_img }}" alt="Admin" style="width:100%; height:auto;">
+                                    @endif                                </div>
                                 <div class="mb-3 mt-3">
                                     <label for="profile_img" class="form-label">Edit Foto Profil</label>
                                     <input type="hidden" name="oldprofile_img" value="{{ $user->profile_img }}">
-                                    <input class="form-control form-control-sm" name="profile_img" id="profile_img"
+                                    <input class="form-control form-control-sm @error('profile_img') is-invalid @enderror" name="profile_img" id="profile_img"
                                         type="file">
+                                        @error('profile_img')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
 
                                 <div class="mt-3">
@@ -103,7 +110,7 @@
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name', $user->name) }}" name="name">
                                     @error('name')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -115,7 +122,8 @@
                                     <h6 class="mb-0">Company Category</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <select class="form-select" name="company_category_id" id='showform'>
+                                    <select class="form-control  @error('company_category_id') is-invalid @enderror" name="company_category_id" id='showform'>
+                                        <option value=""> Kategori Usaha Kamu</option>
                                         @foreach ($company_categories as $category)
                                             @if ($user->company_detail->company_category->id == $category->id)
                                                 <option value="{{ $category->id }}" selected>
@@ -126,6 +134,11 @@
                                             @endif
                                         @endforeach
                                     </select>
+                                    @error('company_category_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -137,7 +150,7 @@
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         value="{{ old('email', $user->email) }}" name="email">
                                     @error('email')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -149,10 +162,10 @@
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror"
-                                        value="{{ old('phone', $user->telephone) }}" name="telephone">
-                                    @error('phone')
-                                        <div class="invlalid-feedback">
+                                    <input type="number" class="form-control @error('telephone') is-invalid @enderror"
+                                        value="{{ old('telephone', $user->telephone) }}" name="telephone">
+                                    @error('telephone')
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -167,7 +180,7 @@
                                     <input type="text" class="form-control  @error('address') is-invalid @enderror"
                                         value="{{ old('address', $user->address) }}" name="address">
                                     @error('address')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -182,7 +195,7 @@
                                     <input type="text" class="form-control @error('facebook') is-invalid @enderror"
                                         value="{{ old('facebook', $user->company_detail->facebook) }}" name="facebook">
                                     @error('facebook')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -197,7 +210,7 @@
                                     <input type="text" class="form-control @error('twitter') is-invalid @enderror"
                                         value="{{ old('twitter', $user->company_detail->twitter) }}" name="twitter">
                                     @error('twitter')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -212,7 +225,7 @@
                                     <input type="text" class="form-control @error('Website') is-invalid @enderror"
                                         value="{{ old('Website', $user->company_detail->website) }}" name="website">
                                     @error('Website')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -228,7 +241,7 @@
                                         value="{{ old('Instagram', $user->company_detail->instagram) }}"
                                         name="instagram">
                                     @error('Instagram')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -245,7 +258,7 @@
                                         name="googlemaps"
                                         rows="3">{{ old('googlemaps', $user->company_detail->googlemaps) }}</textarea>
                                     @error('googlemaps')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror

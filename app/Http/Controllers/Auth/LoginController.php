@@ -43,17 +43,21 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
 
+        $message=[
+            'email.required' => 'Mohon Mengisi Email Untuk Login',
+            'password.required' => 'Mohon Mengisi Password Untuk Login'
+        ];
         $credentials = $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
-        ]);
+        ],$message);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/home');
         }
 
-            return back()->with('loginError', 'Login gagal !');
+            return back()->with('loginError', 'Email atau Password Salah !');
 
         
 

@@ -47,28 +47,48 @@ class DashboardJobVacancyController extends Controller
      */
     public function store(Request $request,job_vacancy $job_vacancy)
     {
+        // dd($request);
         $today=date("Y-m-d", time());
+
         $rules = [
 
-            'branch' =>  'required|string',
+            'branch' =>  'required|string|regex:/^[\pL\s\-]+$/u',
             'description' =>  'required|string',
             'job_type' =>  'required|string',
             'location' =>   'required|string',
             'last_education' =>  'required|string',
             'study_major_id' => 'required|integer',
-            'min_wages' => 'required|numeric|lt:max_wages',
-            'max_wages' => 'required|numeric|gt:min_wages',
+            'min_wages' => 'required|numeric|lt:max_wages|min:500000',
+            'max_wages' => 'required|numeric|gt:min_wages|max:100000000',
             'deadline' =>  'required|date|after:'.$today.'',
             'departement_id' =>  'required|integer',
             'interview' =>  'required|boolean',
-
-
         ];
+
+        $message = [
+            'branch.regex' =>  'Mohon Isi Nama Lowongan Dengan Huruf Saja',
+            'branch.required' =>  'Mohon Isi Nama Lowongan',
+            'description.required' =>  'Mohon Isi Keterangan Lowongan',
+            'job_type.required' =>  'Mohon Pilih Jenis Lowongan',
+            'location.required' =>   'Mohon Isi Alamat Lowongan',
+            'last_education.required' =>  'Mohon Pilih Minimal Pendidikan',
+            'study_major_id.required' => 'Mohon Pilih Jurusan',
+            'min_wages.required' => 'Mohon Isi Gaji Minimal',
+            'max_wages.required' => 'Mohon Isi Gaji Maksimal',
+            'min_wages.lt' => 'Mohon Isi Gaji Minimal Lebih Rendah Dari pada Gaji Maksimal',
+            'max_wages.gt' => 'Mohon Isi Gaji Maksimal Lebih Tinggi Dari pada Gaji Minimal',
+            'min_wages.min' => 'Gaji Minimal Rp.500.000',
+            'max_wages.max' => 'Gaji Maksimal Rp. 100.000.000',
+            'deadline.required' =>  'Mohon Pilih Tanggal Batas Post Lowongan',
+            'deadline.after' =>  'Mohon Pilih Tanggal Batas Post Lowongan Setelah hari ini',
+            'departement_id.required' =>  'Mohon Pilih Bidang Lowongan',
+        ];
+
         $uid = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10);
         if($uid == $job_vacancy ->uid_job_vacancy){
             $uid = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10);
         }
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules,$message);
         $validatedData['company_id'] = auth()->user()->company_detail->id;
         $validatedData['uid_job_vacancy'] = $uid;
         job_vacancy::create($validatedData);
@@ -120,22 +140,39 @@ class DashboardJobVacancyController extends Controller
         $today=date("Y-m-d", time());
         $rules = [
 
-            'branch' =>  'required|string',
+            'branch' =>  'required|string|regex:/^[\pL\s\-]+$/u',
             'description' =>  'required|string',
             'job_type' =>  'required|string',
             'location' =>   'required|string',
             'last_education' =>  'required|string',
             'study_major_id' => 'required|integer',
-            'min_wages' => 'required|numeric|lt:max_wages',
-            'max_wages' => 'required|numeric|gt:min_wages',
+            'min_wages' => 'required|numeric|lt:max_wages|min:500000',
+            'max_wages' => 'required|numeric|gt:min_wages|max:100000000',
             'deadline' =>  'required|date|after:'.$today.'',
             'departement_id' =>  'required|integer',
             'interview' =>  'required|boolean',
-
-
         ];
 
-        $validatedData = $request->validate($rules);
+        $message = [
+            'branch.regex' =>  'Mohon Isi Nama Lowongan Dengan Huruf Saja',
+            'branch.required' =>  'Mohon Isi Nama Lowongan',
+            'description.required' =>  'Mohon Isi Keterangan Lowongan',
+            'job_type.required' =>  'Mohon Pilih Jenis Lowongan',
+            'location.required' =>   'Mohon Isi Alamat Lowongan',
+            'last_education.required' =>  'Mohon Pilih Minimal Pendidikan',
+            'study_major_id.required' => 'Mohon Pilih Jurusan',
+            'min_wages.required' => 'Mohon Isi Gaji Minimal',
+            'max_wages.required' => 'Mohon Isi Gaji Maksimal',
+            'min_wages.lt' => 'Mohon Isi Gaji Minimal Lebih Rendah Dari pada Gaji Maksimal',
+            'max_wages.gt' => 'Mohon Isi Gaji Maksimal Lebih Tinggi Dari pada Gaji Minimal',
+            'min_wages.min' => 'Gaji Minimal Rp.500.000',
+            'max_wages.max' => 'Gaji Maksimal Rp. 100.000.000',
+            'deadline.required' =>  'Mohon Pilih Tanggal Batas Post Lowongan',
+            'deadline.after' =>  'Mohon Pilih Tanggal Batas Post Lowongan Setelah hari ini',
+            'departement_id.required' =>  'Mohon Pilih Bidang Lowongan',
+        ];
+
+        $validatedData = $request->validate($rules,$message);
         $validatedData['company_id'] = auth()->user()->company_detail->id;
         job_vacancy::where('id',$id)->update($validatedData);
 

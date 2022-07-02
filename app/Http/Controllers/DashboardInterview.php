@@ -44,19 +44,31 @@ class DashboardInterview extends Controller
      */
     public function store(Request $request,interview $interview )
     {
+        $today=date("Y-m-d", time());
+
         $rules = [
-            'job_vacancy_id' => 'required', 'integer',
-            'interview_date' =>  'required','date',
-            'address' =>   'required','string',
-            'notes' =>  'string',
+            'job_vacancy_id' => 'required|integer',
+            'interview_date' =>  'required|date|after:'.$today.'',
+            'address' =>   'required|string',
+            'notes' =>  'required|string',
+            'kategori_id' => 'required|integer'
+        ];
+
+
+        $message = [ 
+            'job_vacancy_id.required' => 'Mohon Piih Lowongan untuk membuat jadwal interview',
+            'interview_date.after' => 'Mohon pilih hari setelah hari ini',
+            'interview_date.required' => 'Mohon tentukan tanggal untuk jadwal interview',
+            'address.required' => 'Mohon isi alamat untuk interview',
+            'kategori_id.required' => 'Mohon Pilih Jenis Interview',
+            'notes.required' => 'Mohon Isi Catatan'
         ];
 
         $job_id = $request->job_vacancy_id;
-      //  dd($job_id);    
 
       $validateddata['interview']=1;
 
-        $validatedData = $request->validate($rules);
+      $validatedData = $request->validate($rules,$message);
         if($request->kategori_id==1){
             $validatedData['online'] = 1;
             $validatedData['offline'] = 0;
@@ -71,9 +83,10 @@ class DashboardInterview extends Controller
         }
         $validatedData['company_id'] = auth()->user()->company_detail->id;
         $validatedData['uid_interview'] = $uid;
+       // dd($validatedData);
         job_vacancy::where('id',$job_id)->update($validateddata);
         interview::create($validatedData);
-        return redirect('/dashboard/interview')->with('message', 'New Interview has been added!');
+        return redirect('/dashboard/interview')->with('message', 'Interview Telah Berhasil Dibuat!');
 
     }
 
@@ -114,25 +127,45 @@ class DashboardInterview extends Controller
      */
     public function update(Request $request, interview $interview)
     {
+        $today=date("Y-m-d", time());
         //
         $rules = [
-            'job_vacancy_id' => 'required', 'integer',
-            'interview_date' =>  'required','date',
-            'address' =>   'required','string',
-            'notes' =>  'required','boolean',
+            'job_vacancy_id' => 'required|integer',
+            'interview_date' =>  'required|date|after:'.$today.'',
+            'address' =>   'required|string',
+            'notes' =>  'required|string',
+            'kategori_id' => 'required|integer'
+        ];
+
+        $rulesI = [
+            'job_vacancy_id' => 'required|integer',
+            'interview_date' =>  'required|date|after:'.$today.'',
+            'address' =>   'required|string',
+            'notes' =>  'required|string',
+        ];
+
+
+        $message = [ 
+            'job_vacancy_id.required' => 'Mohon Piih Lowongan untuk membuat jadwal interview',
+            'interview_date.after' => 'Mohon pilih hari setelah hari ini',
+            'interview_date.required' => 'Mohon tentukan tanggal untuk jadwal interview',
+            'address.required' => 'Mohon isi alamat untuk interview',
+            'kategori_id.required' => 'Mohon Pilih Jenis Interview',
+            'notes.required' => 'Mohon Isi Catatan'
         ];
         
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules,$message);
+        $validatedata =  $request->validate($rulesI);
         if($request->kategori_id==1){
-            $validatedData['online'] = 1;
-            $validatedData['offline'] = 0;
+            $validatedata['online'] = 1;
+            $validatedata['offline'] = 0;
         }else{
-            $validatedData['online'] = 0;
-            $validatedData['offline'] = 1;
+            $validatedata['online'] = 0;
+            $validatedata['offline'] = 1;
         }
-        $validatedData['company_id'] = auth()->user()->company_detail->id;
-        interview::where('id',$interview->id)->update($validatedData);
-        return redirect('/dashboard/interview')->with('message', 'New Interview has been added!');
+        $validatedata['company_id'] = auth()->user()->company_detail->id;
+        interview::where('id',$interview->id)->update($validatedata);
+        return redirect('/dashboard/interview')->with('message', 'Interview Telah Berhasil Diedit!');
     }
 
     /**

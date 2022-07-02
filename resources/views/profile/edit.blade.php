@@ -21,14 +21,21 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <div class="rounded-circle" style="width: 15vw; height: 15vw; overflow: hidden;">
-                                    <img src="{{ Auth()->user()->profile_img }}" alt="Admin"
-                                        style="width:100%; height:auto">
-                                </div>
+                                    @if ( Auth()->user()->profile_img == "")
+                                    <img src="/image/defaultuser.png" alt="Admin" style="width:100%; height:auto;">
+                                    @else
+                                    <img src="{{ Auth()->user()->profile_img }}" alt="Admin" style="width:100%; height:auto;">
+                                    @endif
+                             </div>
                                 <div class="mb-3 mt-3">
                                     <label for="profile_img" class="form-label">Edit Foto Profil</label>
                                     <input type="hidden" name="oldprofile_img" value="{{ auth()->user()->profile_img }}">
-                                    <input class="form-control form-control-sm" name="profile_img" id="profile_img"
-                                        type="file">
+                                    <input class="form-control form-control-sm @error('profile_img') is-invalid @enderror" name="profile_img" id="profile_img" type="file">
+                                        @error('profile_img')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
 
                                 <div class="mt-3">
@@ -57,10 +64,15 @@
                                             </path>
                                         </svg>PDF</h6>
                                     <span class="text-secondary my-2">
-                                        <input type="hidden" name="oldcvc_url"
+                                        <input type="hidden" name="oldcv_url"
                                             value="{{ Auth()->user()->user_detail->cv_url }}">
                                         <input type="hidden" name="status_id" value="{{ auth()->user()->status_id }}">
-                                        <input type="file" class="form-control form-control-sm" name="cv_url" id="cv_url">
+                                        <input type="file" class="form-control form-control-sm @error('cv_url') is-invalid @enderror" name="cv_url" id="cv_url">
+                                        @error('cv_url')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                     </span>
                                 </li>
                             </ul>
@@ -78,7 +90,7 @@
                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name', Auth()->user()->name) }}">
                                     @error('name')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -93,7 +105,7 @@
                                         class="form-control @error('email') is-invalid @enderror"
                                         value="{{ old('email', Auth()->user()->email) }}">
                                     @error('email')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -108,7 +120,7 @@
                                         class="form-control @error('telephone') is-invalid @enderror"
                                         value="{{ old('telephone', Auth()->user()->telephone) }}">
                                     @error('telephone')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -124,7 +136,7 @@
                                         @php
                                             $pendidikan = ['Tidak Ada', 'SMP', 'SMA', 'SMK', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3'];
                                         @endphp
-                                        <option value="null"> Pendidikan Terakhir Kamu</option>
+                                        <option value=""> Pendidikan Terakhir Kamu</option>
                                         @foreach ($pendidikan as $key)
                                             @if (Auth()->user()->user_detail->last_education == $key)
                                                 <option value="{{ $key }}" selected>{{ $key }}</option>
@@ -134,7 +146,7 @@
                                         @endforeach
                                     </select>
                                     @error('last_education')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -147,8 +159,9 @@
                                 <div class="col-sm-9 text-secondary">
                                     <select class="form-control @error('study_major_id') is-invalid @enderror"
                                         name="study_major_id">
+                                        <option value=""> Jurusan Kamu</option>
                                         @foreach ($study_majors as $study_major)
-                                            @if (Auth()->user()->user_detail->study_major->study_name == $study_major->id)
+                                            @if (Auth()->user()->user_detail->study_major->id == $study_major->id)
                                                 <option value="{{ $study_major->id }}" selected>
                                                     {{ $study_major->study_name }}</option>
                                             @else
@@ -158,7 +171,7 @@
                                         @endforeach
                                     </select>
                                     @error('study_major_id')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -171,6 +184,7 @@
                                 <div class="col-sm-9 text-secondary">
                                     <select class="form-control @error('profession_id') is-invalid @enderror"
                                         name="profession_id">
+                                        <option value=""> Profesi Kamu</option>
                                         @foreach ($professions as $profession)
                                             @if (Auth()->user()->user_detail->profession->id == $profession->id)
                                                 <option value="{{ $profession->id }}" selected>
@@ -182,7 +196,7 @@
                                         @endforeach
                                     </select>
                                     @error('profession_id')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -197,7 +211,7 @@
                                         class="form-control @error('address') is-invalid @enderror"
                                         value="{{ old('address', Auth()->user()->address) }}">
                                     @error('address')
-                                        <div class="invlalid-feedback">
+                                        <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror

@@ -19,7 +19,17 @@
     </script>
 
 
+    {{-- Password Eye --}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
+    {{-- JavaScript --}}
+    {{-- <link rel="stylesheet" type="text/javascript" href="/js/app.js"> --}}
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> --}}
+    
+
+    
     {{-- Trix Editor --}}
 
     <link rel="stylesheet" type="text/css" href="/css/trix.css">

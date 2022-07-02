@@ -34,7 +34,11 @@
             @foreach ($job_vacancies as $job_vacancy)
 
                 <div class="col-sm-3 col-sm-offset-5 text-center card">
-                    <img src={{ $job_vacancy->profile_img }} alt="" class="card-img-top mt-3">
+                    @if ( $job_vacancy->profile_img == "")
+                    <img src="/image/defaultcompany.png" alt="" class="card-img-top mt-3">
+                    @else
+                    <img src= {{ $job_vacancy->profile_img }} alt="" class="card-img-top mt-3">
+                    @endif
                     <div class="card-body">
                         <h5 class="mb-1 text card-title" style="font-weight:bold;">{{ $job_vacancy->branch }}</h5>
                         <p class="job-company-name">
