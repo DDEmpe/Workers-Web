@@ -25,7 +25,7 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $job_vacancy -> branch }}</td>
-              <td>{{ $job_vacancy -> address }}</td>
+              <td>{{ $job_vacancy -> location }}</td>
               <td>{{ $job_vacancy->department->departement_name}}</td>
               <td>{{ $job_vacancy -> deadline }}</td>
               <td>

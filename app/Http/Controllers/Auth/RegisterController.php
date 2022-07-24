@@ -346,7 +346,6 @@ class RegisterController extends Controller
             }
 
 
-            $validateddata = $request->validate($rulescompany);
             $validateddata['user_id'] = $uid;
             company_detail::where('user_id', $uid)->update($validateddata);
 

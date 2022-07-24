@@ -45,12 +45,12 @@
                             {{ $job_vacancy->name }}
                         </p>
                         <p class="job-location">
-                            {{ $job_vacancy->address }}
+                            {{ $job_vacancy->location }}
                         </p>
                         <p class="job_pay">
                             Rp.{{ $job_vacancy->min_wages }} to Rp.{{ $job_vacancy->max_wages }}
                         </p>
-                        <a href="/job_detail/{{ $job_vacancy->uid_job_vacancy }}" class="btn btn-warning">Lihat
+                        <a href="/job_detail/{{ $job_vacancy ->uid_job_vacancies }}" class="btn btn-warning">Lihat
                             Lowongan</a>
                     </div>
                 </div>

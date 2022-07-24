@@ -84,10 +84,54 @@ class DashboardJobVacancyController extends Controller
             'departement_id.required' =>  'Mohon Pilih Bidang Lowongan',
         ];
 
-        $uid = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10);
+        $no = random_int(001, 999);
+        // dd(Auth()->user()->name);
+        $name = Auth()->user()->name;
+
+        // trim the string
+        $string0 = $name.' '.$request->branch.' '.$no;
+        $string = trim($string0);
+
+        $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                    'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                    'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                    'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                    'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+
+        // remove all diacritics    
+        $str = strtr( $string, $unwanted_array );
+
+        // remove all non alphanumeric characters except spaces
+        $clean =  preg_replace('/[^a-zA-Z0-9\s]/', '', strtolower($str));
+
+        // replace one or multiple spaces into single dash (-)
+        $clean =  preg_replace('!\s+!', '-', $clean);
+
+
+        $uid = $clean;
         if($uid == $job_vacancy ->uid_job_vacancy){
-            $uid = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10);
+        $no = random_int(001, 999);
+        $string0 = $name.' '.$request->branch.' '.$no;
+        $string = trim($string0);
+
+        $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                    'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                    'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                    'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                    'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+
+        // remove all diacritics    
+        $str = strtr( $string, $unwanted_array );
+
+        // remove all non alphanumeric characters except spaces
+        $clean =  preg_replace('/[^a-zA-Z0-9\s]/', '', strtolower($str));
+
+        // replace one or multiple spaces into single dash (-)
+        $clean =  preg_replace('!\s+!', '-', $clean);
+
+        $uid = $clean;
         }
+       // dd($uid);
         $validatedData = $request->validate($rules,$message);
         $validatedData['company_id'] = auth()->user()->company_detail->id;
         $validatedData['uid_job_vacancy'] = $uid;
@@ -194,4 +238,11 @@ class DashboardJobVacancyController extends Controller
 
         return redirect('/dashboard/lowongan')->with('Berhasil','Data Lowongan Telah Dihapus');
     }
+
+    // public function makeSeoLink($string1, $string2, $string3)
+    // {
+        
+    
+    //     return $clean;
+    // }
 }

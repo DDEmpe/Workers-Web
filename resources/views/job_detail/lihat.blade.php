@@ -29,7 +29,7 @@
                     <div class="mt-3">
                       <h4>{{$usr->name}}</h4>
                       <p class="text-secondary mb-1"> {{$usr->company_detail->company_category->company_category_name}} </p>
-                      <p class="text-muted font-size-sm">{{ $usr->location}}</p>
+                      <p class="text-muted font-size-sm">{{ $usr->address}}</p>
                     </div>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{$usr->location}}
+                      {{$usr->address}}
                     </div>
                   </div>      
                 </div>
