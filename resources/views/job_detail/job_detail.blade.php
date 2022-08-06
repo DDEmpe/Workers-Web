@@ -48,7 +48,7 @@
           @csrf
           <input type="hidden" name="job_vacancy_id" value={{ $job_vacancy -> id }}>
           <input type="hidden" name="company_id" value={{ $job_vacancy -> company_id  }}>
-          @if(Auth::user()->status_id =='2')
+          @if(Auth::user()->status_id =='2' and  $job_vacancy -> deadline >= $today)
           <button type="submit" class="btn btn-outline-primary btn-lg mt-3" style="padding: 8px 55px;">Apply</button>
           @endif
         </form>

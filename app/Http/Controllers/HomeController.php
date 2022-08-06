@@ -30,13 +30,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $today=date("Y-m-d", time());
 
-        $search = job_vacancy::join('company_details', 'company_details.id', '=', 'job_vacancies.company_id')->join('users', 'users.id', "=", "company_details.user_id");
+        $search = job_vacancy::join('company_details', 'company_details.id', '=', 'job_vacancies.company_id')->join('users', 'users.id', "=", "company_details.user_id")->where('deadline', '>=' , $today );
 
         if (request('search') != '') {
             $sear = $search->where('branch', 'like', '%' . request('search') . '%')->paginate(8);
         } elseif (request('search') == '') {
-            $sear = job_vacancy::join('company_details', 'company_details.id', '=', 'job_vacancies.company_id')->join('users', 'users.id', "=", "company_details.user_id")->paginate(8);
+            $sear = job_vacancy::join('company_details', 'company_details.id', '=', 'job_vacancies.company_id')->join('users', 'users.id', "=", "company_details.user_id")->where('deadline', '>=' , $today )->paginate(8);
         }
 
         // dd($search);

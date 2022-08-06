@@ -116,7 +116,7 @@
                                     <h6 class="mb-0">Nomor Telepon</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" name="telephone"
+                                    <input type="number" name="telephone"
                                         class="form-control @error('telephone') is-invalid @enderror"
                                         value="{{ old('telephone', Auth()->user()->telephone) }}">
                                     @error('telephone')

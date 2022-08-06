@@ -6,7 +6,7 @@
 </div>
 
 <div class="col-lg-8 ">
-    <form action="/dashboard/lowongan" method="post" class="mb-5" >
+    <form action="/dashboard/lowongan" method="post" class="mb-5" id="form" >
         @csrf
         <div class="mb-3">
             <label for="branch" class="form-label">Nama Lowongan</label>
@@ -141,14 +141,29 @@
             @enderror
         </div>
 
+        <div class="g-recaptcha" data-sitekey="6LfpmhYhAAAAAE-Yoi6cTNpsWpHg_oe2eITd3Arf"></div>
+        <div class="mb-3"></div>
+
         <button type="submit" class="btn btn-warning">Save</button>
     </form>
 </div>
 
     <script>
-document.addEventListener('trix-file-accept', function(e){
-    e.preventDefault();
-})
+    document.addEventListener('trix-file-accept', function(e){
+        e.preventDefault();
+    })
+
+
+
+        document.addEventListener('submit', function(e){
+        var verified = grecaptcha.getResponse();
+        if(verified.length === 0){
+            alert('Mohon Verifikasi Captcha!');
+            e.preventDefault();
+        }
+    })
+    
+   
 
 
     </script>
